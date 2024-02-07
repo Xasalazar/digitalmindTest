@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\API\Auth\AuthController;
 use App\Http\Controllers\API\Auth\EmailVerificationController;
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\API\CargoController;
+use App\Http\Controllers\API\DepartamentoController;
+use App\Http\Controllers\API\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,16 +18,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('login', [AuthController::class, 'login']);
-Route::post('register', [AuthController::class, 'register']);
+// Route::post('login', [AuthController::class, 'login']);
+// Route::post('register', [AuthController::class, 'register']);
 
-Route::post('forgot-password', [AuthController::class, 'forgotPassword'])->name('forget.password.post');
-Route::get('reset-password/{token}', [AuthController::class, 'checkResetPasswordToken'])->name('reset.password.get');
-Route::post('reset-password', [AuthController::class, 'passwordReset'])->name('password.update');;
+// Route::post('forgot-password', [AuthController::class, 'forgotPassword'])->name('forget.password.post');
+// Route::get('reset-password/{token}', [AuthController::class, 'checkResetPasswordToken'])->name('reset.password.get');
+// Route::post('reset-password', [AuthController::class, 'passwordReset'])->name('password.update');;
 
-Route::get('email/verify/{id}/{hash}', [EmailVerificationController::class, 'verify'])->name('verification.verify')->middleware(['signed']);
-Route::get('email/resend', [EmailVerificationController::class, 'resend'])->name('verification.resend');
+// Route::get('email/verify/{id}/{hash}', [EmailVerificationController::class, 'verify'])->name('verification.verify')->middleware(['signed']);
+// Route::get('email/resend', [EmailVerificationController::class, 'resend'])->name('verification.resend');
 
+Route::resource('departamentos', DepartamentoController::class);
+Route::resource('cargos', CargoController::class);
+Route::resource('usuarios', UserController::class);
+
+Route::put('usuario/{id}', [UserController::class, 'update']);
 
 Route::middleware(['auth:api', 'verified'])->group( function () {
     //Route::get('products', [ProductController::class, 'index']);
